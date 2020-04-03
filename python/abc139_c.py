@@ -1,35 +1,25 @@
-def count_descending(nums, start):
-    if start >= len(nums):
-        return 0
+import itertools
+
+
+def count_chains(nums):
+    if not nums:
+        return
 
     count = 1
-    previous = nums[start]
-    for i in range(start + 1, len(nums)):
-        if previous < nums[i]:
-            return count
-        else:
+    for m, n in zip(nums, nums[1:]):
+        if m >= n:
             count += 1
-            previous = nums[i]
-
-    return count
-
-
-def max_move(nums):
-    start = 0
-    current_max = 0
-    while start < len(nums):
-        n = count_descending(nums, start)
-        current_max = max(current_max, n)
-        start += n
-
-    return current_max
+        else:
+            yield count
+            count = 1
+    yield count
 
 
 def main():
     n = int(input())
     h = [int(x) for x in input().split()]
 
-    print(max_move(h) - 1)
+    print(max(count_chains(h)) - 1)
 
 
 if __name__ == "__main__":
