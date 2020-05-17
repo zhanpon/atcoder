@@ -1,24 +1,15 @@
 use std::collections::HashSet;
 
-use proconio::input;
+use proconio::{input, marker::Usize1};
 
 fn main() {
     input! {
         n: usize,
         k: usize,
+        d: [[u32]; k],
     }
 
-    let mut snukes = HashSet::new();
-    for _ in 0..k {
-        input! {
-            d: usize,
-            a: [i32; d]
-        }
-
-        for x in a {
-            snukes.insert(x);
-        }
-    }
-
-    println!("{}", n - snukes.len());
+    let snukes: HashSet<u32> = d.into_iter().flatten().collect();
+    let ans = n - snukes.len();
+    println!("{}", ans);
 }
